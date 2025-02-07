@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Kiss Day! 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: clamp(24px, 5vw, 48px);
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .scene {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .character {
+            position: absolute;
+            width: 120px;
+            height: 200px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .boy {
+            left: 10%;
+            animation: boyKiss 4s forwards;
+        }
+
+        .girl {
+            right: 10%;
+            animation: girlKiss 4s forwards;
+        }
+
+        .head {
+            position: relative;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: #ffdab9;
+            box-shadow: inset -3px -3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .boy .head {
+            width: 65px;
+            height: 65px;
+            animation: boyHeadTilt 4s forwards;
+        }
+
+        .girl .head {
+            width: 60px;
+            height: 60px;
+            animation: girlHeadTilt 4s forwards;
+        }
+
+        .face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .eye {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #333;
+            border-radius: 50%;
+            top: 40%;
+            animation: closeEyes 4s forwards;
+        }
+
+        .eye.left { left: 25%; }
+        .eye.right { right: 25%; }
+
+        .blush {
+            position: absolute;
+            width: 15px;
+            height: 7px;
+            background: #ff8fab;
+            border-radius: 50%;
+            top: 45%;
+            opacity: 0;
+            animation: showBlush 4s forwards;
+        }
+
+        .blush.left { left: 10%; }
+        .blush.right { right: 10%; }
+
+        .mouth {
+            position: absolute;
+            width: 20px;
+            height: 8px;
+            border-bottom: 2px solid #333;
+            border-radius: 0 0 10px 10px;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: kissMouth 4s forwards;
+        }
+
+        .heart-effect {
+            position: absolute;
+            font-size: 24px;
+            color: #ff1493;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: heartPop 0.5s ease-out forwards;
+            animation-delay: 2s;
+        }
+
+        .hair {
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .boy .hair {
+            height: 20px;
+        }
+
+        .girl .hair {
+            height: 80px;
+        }
+
+        .hair-strand {
+            position: absolute;
+            border-radius: 10px;
+        }
+
+        .boy .hair-strand {
+            background: #2c1810;
+            height: 25px;
+            width: 20px;
+        }
+
+        .girl .hair-strand {
+            background: #ffdab9;
+            height: 80px;
+            width: 25px;
+        }
+
+        .girl .bow {
+            position: absolute;
+            top: -5px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #ff1493;
+            border-radius: 50%;
+            transform: rotate(45deg);
+            z-index: 2;
+        }
+
+        .girl .bow:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            transform: rotate(-90deg);
+        }
+
+        .body {
+            position: relative;
+            margin: 5px auto;
+            border-radius: 20px 20px 10px 10px;
+        }
+
+        .boy .body {
+            width: 75px;
+            height: 85px;
+            background: #4169e1;
+        }
+
+        .girl .body {
+            width: 65px;
+            height: 80px;
+            background: #ff69b4;
+        }
+
+        .girl .skirt {
+            position: absolute;
+            bottom: -20px;
+            left: -10px;
+            width: 85px;
+            height: 30px;
+            background: #ff69b4;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: white;
+            opacity: 0;
+            animation: float 4s ease-in infinite;
+        }
+
+        .message {
+            text-align: center;
+            font-size: clamp(16px, 3vw, 24px);
+            color: white;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 3s;
+            padding: 0 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes boyKiss {
+            0% { transform: translateX(0) translateY(-50%); }
+            100% { transform: translateX(80px) translateY(-50%); }
+        }
+
+        @keyframes girlKiss {
+            0% { transform: translateX(0) translateY(-50%); }
+            100% { transform: translateX(-80px) translateY(-50%); }
+        }
+
+        @keyframes boyHeadTilt {
+            0% { transform: rotate(0); }
+            100% { transform: rotate(15deg); }
+        }
+
+        @keyframes girlHeadTilt {
+            0% { transform: rotate(0); }
+            100% { transform: rotate(-15deg); }
+        }
+
+        @keyframes closeEyes {
+            0% { transform: scaleY(1); }
+            90% { transform: scaleY(1); }
+            100% { transform: scaleY(0.1); }
+        }
+
+        @keyframes showBlush {
+            0% { opacity: 0; }
+            90% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes kissMouth {
+            0% { border-radius: 0 0 10px 10px; width: 20px; }
+            90% { border-radius: 0 0 10px 10px; width: 20px; }
+            100% { border-radius: 50%; width: 10px; }
+        }
+
+        @keyframes heartPop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .scene {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    <h1 class="title">Happy Kiss Day! 💕</h1>
+    
+    <div class="scene">
+        <div class="heart-effect">💕</div>
+        <!-- Boy Character -->
+        <div class="character boy">
+            <div class="head">
+                <div class="hair">
+                    <div class="hair-strand" style="left: 5px; transform: rotate(-5deg);"></div>
+                    <div class="hair-strand" style="left: 25px; transform: rotate(5deg);"></div>
+                    <div class="hair-strand" style="left: 45px; transform: rotate(15deg);"></div>
+                </div>
+                <div class="face">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="blush left"></div>
+                    <div class="blush right"></div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+            <div class="body"></div>
+        </div>
+
+        <!-- Girl Character -->
+        <div class="character girl">
+            <div class="head">
+                <div class="bow"></div>
+                <div class="hair">
+                    <div class="hair-strand" style="left: 0; transform: rotate(-15deg);"></div>
+                    <div class="hair-strand" style="left: 20px;"></div>
+                    <div class="hair-strand" style="left: 40px; transform: rotate(15deg);"></div>
+                </div>
+                <div class="face">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="blush left"></div>
+                    <div class="blush right"></div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="skirt"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message">
+        "Every kiss begins with you,<br>
+        and my heart beats just for you! ❤️"
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 300);
+        }
+
+        window.onload = () => {
+            setTimeout(createHearts, 1000);
+        };
+    </script>
+</body>
+</html>
